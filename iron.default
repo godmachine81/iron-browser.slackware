@@ -1,0 +1,16 @@
+# Default settings for chromium. This file is sourced by /usr/bin/chromium
+
+# Options to pass to chromium
+CHROMIUM_FLAGS=""
+
+
+# START chromium-pepperflash-plugin
+flashso="/opt/iron/PepperFlash/libpepflashplayer.so"
+
+if [ -f $flashso ]
+then
+  flashversion=$(strings $flashso|grep ^LNX|sed -e "s/^LNX //"|sed -e "s/,/./g")
+  CHROMIUM_FLAGS="$CHROMIUM_FLAGS --ppapi-flash-path=$flashso --ppapi-flash-version=$flashversion"
+fi
+# END chromium-pepperflash-plugin
+
