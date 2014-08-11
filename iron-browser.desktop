@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Iron
+Categories=GTK;Network;WebBrowser;
+Comment=Iron Web Browser (based on chromium)
+Icon=/opt/iron/product_logo_48.png
+Exec=/usr/bin/iron
+Path=
+Terminal=false
+StartupNotify=false
