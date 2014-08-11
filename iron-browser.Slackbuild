@@ -1,0 +1,74 @@
+#!/bin/sh
+
+PRGNAM=iron-browser
+VERSION=${VERSION:-35.0.1900}
+BUILD=${BUILD:-2}
+TAG=${TAG:-_gm81}
+
+# Automatically determine the architecture we're building on:
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i486 ;;
+    arm*) ARCH=arm ;;
+    # Unless $ARCH is already set, use uname -m for all other archs:
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+CWD=$(pwd)
+TMP=${TMP:-/tmp/godmachine81-builds}	
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}	
+
+if [ "$ARCH" = "i486" ]; then
+  echo "This packages is only for x86_64!!"
+	exit
+elif [ "$ARCH" = "i686" ]; then
+  echo "This packages is only for x86_64!!"
+        exit
+elif [ "$ARCH" = "x86_64" ]; then
+  TARSUFFIX="-64"
+else
+  echo "This packages is only for x86_64!!"
+        exit
+fi
+
+set -e 
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf $PRGNAM-$VERSION
+tar xvf $CWD/iron-browser-$VERSION.tar.gz
+cd iron
+chown -R root:root .
+find . \
+ \( -perm 777 -o -perm 775 -o -perm 711 -o -perm 555 -o -perm 511 \) \
+ -exec chmod 755 {} \; -o \
+ \( -perm 666 -o -perm 664 -o -perm 600 -o -perm 444 -o -perm 440 -o -perm 400 \) \
+ -exec chmod 644 {} \;
+
+mkdir -p $PKG/opt/iron
+cp -r * $PKG/opt/iron
+chmod +x $PKG/opt/iron/iron
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+
+mkdir -p $PKG/etc/default
+cp $CWD/iron.default $PKG/etc/default/iron
+
+mkdir -p $PKG/usr/bin
+cd $PKG/usr/bin
+cp $CWD/iron.wrapper ./iron
+
+mkdir -p $PKG/usr/lib64
+cp /usr/lib64/libudev.so $PKG/usr/lib64/libudev.so.1
+
+# Copy Desktop file
+mkdir -p $PKG/usr/share/applications
+cat $CWD/iron-browser.desktop > $PKG/usr/share/applications/iron-browser.desktop
+
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.${PKGTYPE:-txz}
