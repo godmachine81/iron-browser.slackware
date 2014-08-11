@@ -1,0 +1,18 @@
+SRWare Iron is developed by SRware
+Modified and customized by Lance Poore <LinuxSociety@gmail.com>
+
+This is a customized build of SRWare's Iron Browser (based on Chromium/Chrome)
+
+This browser has been heavily modified to remove ALL google tracking services and any privacy related components
+
+*Add built-in support for Flash Player
+*Add built-in support for PDF plugin to view PDF files in Iron
+*Add built-in support for GoogleTalk Plugin (allows using hangouts, googlevoice from gmail, and Gtalk video/audio conferences)
+
+The current version will remain behind Chromium/Chromes stable tree by one release at most times (this is perfectly normal)
+
+
+Currently I am providing pkgs/slackbuilds for x86_64 only!
+
+Enjoy!
+
